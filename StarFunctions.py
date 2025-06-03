@@ -4,15 +4,15 @@ from turtle import RawTurtle, Screen
 
 @dataclass
 class StarData:
-    pos: tuple[int, int] = (0,0)
-    size: float = 200
-    num_points: int = 5
-    line_color: str = "black"
-    line_width: int = 1
-    is_filled: bool = False
-    fill_color: str = "black"
-    chord_angle: float = 0
-    half_angle: float = 18
+    pos: tuple[int, int]
+    size: float
+    num_points: int
+    line_color: str
+    line_width: int
+    is_filled: bool
+    fill_color: str
+    chord_angle: float
+    half_angle: float
 
 
 def get_input(screen: Screen) -> StarData:
@@ -29,11 +29,15 @@ def get_input(screen: Screen) -> StarData:
     #color things
     line_width = int(screen.numinput("Line width", "Line width", default= 1, minval= 1))
     line_color = screen.textinput("Line color", "Line color")
+    if line_color == "":
+        line_color = "black"
     is_filled = screen.textinput("Fill", "Is the star colored in?")
     is_filled = is_filled.lower() == "yes" or is_filled.lower() == "true"
 
     if is_filled:
         fill_color = screen.textinput("Fill color", "Fill color")
+        if fill_color == "":
+            fill_color = "black"
     else:
         fill_color = "black"
 
