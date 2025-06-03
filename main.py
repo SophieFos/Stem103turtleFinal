@@ -14,6 +14,9 @@ leg_length = star.size * math.sin(star.chord_angle * .5)
 #init the turtle
 t = init_turtle(screen, star)
 
+if leg_length * star.num_points > 1_000_000:
+    t.speed(10)
+
 #normal star
 if star.num_points != 6:
 
@@ -32,6 +35,8 @@ if star.num_points != 6:
 
 # handle six pointed weirdness
 else:
+    if leg_length * star.num_points > 500_000:
+        t.speed(10)
     #init 2nd turtle
     t2 = RawTurtle(screen.getcanvas())
     t2.width(star.line_width)

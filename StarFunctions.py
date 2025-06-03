@@ -21,7 +21,7 @@ def get_input(screen: Screen) -> StarData:
     pos_y = screen.numinput("Y position", "center y coordinate", 0, -screen.window_height() / 2, screen.window_height() / 2)
 
     #get size
-    diameter = screen.numinput("Diameter", "Star Diameter", 200, 1, min(screen.window_width(), screen.window_height()))
+    diameter = screen.numinput("Diameter", "Star Diameter", 200, 1)
 
     #get num_points
     num_points = int(screen.numinput("Points", "Number of points", default= 5, minval= 5))
@@ -42,10 +42,12 @@ def get_input(screen: Screen) -> StarData:
         chord_angle = (math.tau / num_points) * (num_points // 2)
         half_angle = (180 - math.degrees(chord_angle)) / 2
     else:
-        point2index = int(num_points * .5 - 1)
-        while math.gcd(point2index, num_points) != 1:
-            point2index -= 1
-        chord_angle = (math.tau / num_points) * point2index
+        second_point_index = int(num_points * .5 - 1)
+
+        #make sure the second point is coprime to the number of points
+        while math.gcd(second_point_index, num_points) != 1:
+            second_point_index -= 1
+        chord_angle = (math.tau / num_points) * second_point_index
         half_angle = (180 - math.degrees(chord_angle)) / 2
 
     star = StarData((pos_x, pos_y), diameter, num_points, line_color, line_width, is_filled, fill_color, chord_angle, half_angle)
