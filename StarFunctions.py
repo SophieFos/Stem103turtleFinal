@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass
 from turtle import RawTurtle, Screen
 
@@ -7,8 +8,10 @@ class StarData:
     size: float = 200
     num_points: int = 5
     line_color: str = "black"
+    line_width: int = 1
     is_filled: bool = False
     fill_color: str = "black"
+    chord_angle: float = 0
     half_angle: float = 18
 
 
@@ -21,9 +24,10 @@ def get_input(screen: Screen) -> StarData:
     diameter = screen.numinput("Diameter", "Star Diameter", 200, 1, min(screen.window_width(), screen.window_height()))
 
     #get num_points
-    points = int(screen.numinput("Points", "Number of points", 5, 5))
+    num_points = int(screen.numinput("Points", "Number of points", default= 5, minval= 5))
 
     #color things
+    line_width = int(screen.textinput("Line width", "Line width"))
     line_color = screen.textinput("Line color", "Line color")
     is_filled = screen.textinput("Fill", "Is the star colored in?")
     is_filled = is_filled.lower() == "yes" or is_filled.lower() == "true"
@@ -33,14 +37,18 @@ def get_input(screen: Screen) -> StarData:
     else:
         fill_color = "black"
 
-    #odd pointed star
-    if points % 2:
-        half_angle = 360 / points / 4
-    #even pointed star
+    # calculate chord angle and half angle
+    if num_points % 2:
+        chord_angle = (math.tau / num_points) * (num_points // 2)
+        half_angle = (180 - math.degrees(chord_angle)) / 2
     else:
-        half_angle = 360 / points / 2
+        point2index = int(num_points * .5 - 1)
+        while math.gcd(point2index, num_points) != 1:
+            point2index -= 1
+        chord_angle = (math.tau / num_points) * point2index
+        half_angle = (180 - math.degrees(chord_angle)) / 2
 
-    star = StarData((pos_x, pos_y), diameter, points, line_color, is_filled, fill_color, half_angle)
+    star = StarData((pos_x, pos_y), diameter, num_points, line_color, line_width, is_filled, fill_color, chord_angle, half_angle)
     return star
 
 def init_turtle(screen: Screen, star: StarData) -> RawTurtle:
@@ -48,6 +56,7 @@ def init_turtle(screen: Screen, star: StarData) -> RawTurtle:
     t = RawTurtle(screen.getcanvas())
 
     t.shape("turtle")
+    t.width(star.line_width)
     t.color(star.line_color, star.fill_color)
     t.penup()
     t.setposition(star.pos[0], star.pos[1] + star.size / 2)
