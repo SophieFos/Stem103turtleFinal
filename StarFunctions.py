@@ -27,7 +27,7 @@ def get_input(screen: Screen) -> StarData:
     num_points = int(screen.numinput("Points", "Number of points", default= 5, minval= 5))
 
     #color things
-    line_width = int(screen.textinput("Line width", "Line width"))
+    line_width = int(screen.numinput("Line width", "Line width", default= 1, minval= 1))
     line_color = screen.textinput("Line color", "Line color")
     is_filled = screen.textinput("Fill", "Is the star colored in?")
     is_filled = is_filled.lower() == "yes" or is_filled.lower() == "true"
