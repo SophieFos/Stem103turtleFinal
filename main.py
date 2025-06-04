@@ -88,5 +88,5 @@ while another:
     screen.clearscreen()
 
 
-#leave the screen up until user clicks
+#leave the program
 screen.bye()
