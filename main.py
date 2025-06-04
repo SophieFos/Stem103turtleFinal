@@ -14,6 +14,8 @@ leg_length = star.size * math.sin(star.chord_angle * .5)
 #init the turtle
 t = init_turtle(screen, star)
 
+if leg_length * star.num_points > 10_000:
+    t.speed(0)
 if leg_length * star.num_points > 5_000:
     t.speed(10)
 
