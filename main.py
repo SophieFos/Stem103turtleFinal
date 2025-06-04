@@ -16,7 +16,7 @@ t = init_turtle(screen, star)
 
 if leg_length * star.num_points > 10_000:
     t.speed(0)
-if leg_length * star.num_points > 5_000:
+elif leg_length * star.num_points > 5_000:
     t.speed(10)
 
 #normal star
