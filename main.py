@@ -1,4 +1,5 @@
 from StarFunctions import *
+import time
 
 #make and init Screen
 screen = Screen()
@@ -81,6 +82,9 @@ while another:
 
         t.hideturtle()
         t2.hideturtle()
+
+    #stare at your star for 5 seconde
+    time.sleep(5)
 
     another = screen.textinput("Continue?", "Do you want to draw another?")
     another = another.lower() == "yes"
