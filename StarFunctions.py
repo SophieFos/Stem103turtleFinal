@@ -63,10 +63,24 @@ def init_turtle(screen: Screen, star: StarData) -> RawTurtle:
 
     t.shape("turtle")
     t.width(star.line_width)
-    t.color(star.line_color, star.fill_color)
+    set_colors(t, star)
     t.penup()
     t.setposition(star.pos[0], star.pos[1] + star.size / 2)
     t.pendown()
     t.setheading(270 - star.half_angle)
 
     return t
+
+def set_colors(turtle: RawTurtle, star: StarData) -> None:
+
+    #set the line color
+    try:
+        turtle.pencolor(star.line_color)
+    except:
+        turtle.pencolor("black")
+
+    #set the fill color
+    try:
+        turtle.fillcolor(star.fill_color)
+    except:
+        turtle.fillcolor("black")
