@@ -1,10 +1,11 @@
 import math
 from dataclasses import dataclass
-from turtle import RawTurtle, Screen
+from turtle import RawTurtle, Screen, TurtleGraphicsError
+
 
 @dataclass
 class StarData:
-    pos: tuple[int, int]
+    pos: tuple[float, float]
     size: float
     num_points: int
     line_color: str
@@ -89,6 +90,6 @@ def color_valid(color: str) -> bool:
     try:
         color_test.pencolor(color)
         return is_valid
-    except:
+    except TurtleGraphicsError:
         is_valid = False
         return is_valid
