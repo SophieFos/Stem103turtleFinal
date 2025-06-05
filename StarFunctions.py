@@ -89,7 +89,9 @@ def color_valid(color: str) -> bool:
     color_test.hideturtle()
     try:
         color_test.pencolor(color)
+        test_screen.clearscreen()
         return is_valid
     except TurtleGraphicsError:
         is_valid = False
+        test_screen.clearscreen()
         return is_valid
