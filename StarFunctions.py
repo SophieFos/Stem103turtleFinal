@@ -15,7 +15,9 @@ class StarData:
     half_angle: float
 
 
-def get_input(screen: Screen) -> StarData:
+def get_input() -> StarData:
+    screen = Screen()
+
     #get the center coordinate
     pos_x = screen.numinput("X position", "center x coordinate", 0, -screen.window_width() / 2, screen.window_width() / 2)
     pos_y = screen.numinput("Y position", "center y coordinate", 0, -screen.window_height() / 2, screen.window_height() / 2)
@@ -25,17 +27,23 @@ def get_input(screen: Screen) -> StarData:
 
     #get num_points
     num_points = int(screen.numinput("Points", "Number of points", default= 5, minval= 5))
+    line_width = int(screen.numinput("Line width", "Line width", default= 1, minval= 1))
 
     #color things
-    line_width = int(screen.numinput("Line width", "Line width", default= 1, minval= 1))
+
     line_color = screen.textinput("Line color", "Line color")
+    while not color_valid(line_color):
+        line_color = screen.textinput("Invalid Color", "Try again")
     if line_color == "":
         line_color = "black"
+
     is_filled = screen.textinput("Fill", "Is the star colored in?")
     is_filled = is_filled.lower() == "yes" or is_filled.lower() == "true"
 
     if is_filled:
         fill_color = screen.textinput("Fill color", "Fill color")
+        while not color_valid(fill_color):
+            fill_color = screen.textinput("Invalid Color", "Try again")
         if fill_color == "":
             fill_color = "black"
     else:
@@ -57,13 +65,14 @@ def get_input(screen: Screen) -> StarData:
     star = StarData((pos_x, pos_y), diameter, num_points, line_color, line_width, is_filled, fill_color, chord_angle, half_angle)
     return star
 
-def init_turtle(screen: Screen, star: StarData) -> RawTurtle:
+def init_turtle(star: StarData) -> RawTurtle:
 
+    screen = Screen()
     t = RawTurtle(screen.getcanvas())
 
     t.shape("turtle")
     t.width(star.line_width)
-    set_colors(t, star)
+    t.color(star.line_color, star.fill_color)
     t.penup()
     t.setposition(star.pos[0], star.pos[1] + star.size / 2)
     t.pendown()
@@ -71,16 +80,15 @@ def init_turtle(screen: Screen, star: StarData) -> RawTurtle:
 
     return t
 
-def set_colors(turtle: RawTurtle, star: StarData) -> None:
+def color_valid(color: str) -> bool:
+    is_valid = True
 
-    #set the line color
+    test_screen = Screen()
+    color_test = RawTurtle(test_screen.getcanvas())
+    color_test.hideturtle()
     try:
-        turtle.pencolor(star.line_color)
+        color_test.pencolor(color)
+        return is_valid
     except:
-        turtle.pencolor("black")
-
-    #set the fill color
-    try:
-        turtle.fillcolor(star.fill_color)
-    except:
-        turtle.fillcolor("black")
+        is_valid = False
+        return is_valid

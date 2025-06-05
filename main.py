@@ -9,13 +9,13 @@ another = True
 while another:
 
     #get the star data
-    star = get_input(screen)
+    star = get_input()
 
     #calculate leg length
     leg_length = star.size * math.sin(star.chord_angle * .5)
 
     #init the turtle
-    t = init_turtle(screen, star)
+    t = init_turtle(star)
 
     if leg_length * star.num_points > 10_000:
         t.speed(0)
