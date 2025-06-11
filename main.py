@@ -17,10 +17,11 @@ while another:
     #init the turtle
     t = init_turtle(star)
 
+    #if the path is too long make the turtle faster
     if leg_length * star.num_points > 10_000:
-        t.speed(0)
+        t.speed(0)  #fastest speed
     elif leg_length * star.num_points > 5_000:
-        t.speed(10)
+        t.speed(10) #2nd fastest
 
     #normal star
     if star.num_points != 6:
@@ -83,8 +84,8 @@ while another:
         t.hideturtle()
         t2.hideturtle()
 
-    #stare at your star for 5 seconds
-    time.sleep(5)
+    #stare at your star for 3 seconds
+    time.sleep(3)
 
     another = screen.textinput("Continue?", "Do you want to draw another?")
     another = another.lower() == "yes"
