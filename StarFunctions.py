@@ -66,7 +66,7 @@ def get_input() -> StarData:
     if num_points % 2:
         chord_angle = (math.tau / num_points) * (num_points // 2)
         half_angle = (180 - math.degrees(chord_angle)) / 2
-    else:
+    elif not num_points == 6:
         second_point_index = int(num_points * .5 - 1)
 
         #make sure the second point is coprime to the number of points
@@ -74,6 +74,9 @@ def get_input() -> StarData:
             second_point_index -= 1
         chord_angle = (math.tau / num_points) * second_point_index
         half_angle = (180 - math.degrees(chord_angle)) / 2
+    else:   #6 pointed weirdness AGAIN
+        chord_angle = (math.tau / num_points) * 2
+        half_angle = 30
 
     star = StarData((pos_x, pos_y), diameter, num_points, line_color, line_width, is_filled, fill_color, chord_angle, half_angle)
     return star
