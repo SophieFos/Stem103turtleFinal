@@ -11,11 +11,11 @@ while another:
     #get the star data
     star = get_input()
 
-    #calculate leg length
-    leg_length = star.size * math.sin(star.chord_angle * .5)
-
     #init the turtle
     t = init_turtle(star)
+
+    #calculate leg length
+    leg_length = star.size * math.sin(star.chord_angle * .5)
 
     #if the path is too long make the turtle faster
     if leg_length * star.num_points > 10_000:
